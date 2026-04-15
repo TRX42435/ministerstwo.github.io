@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="icon" type="image/webp" href="https://logowik.com/content/uploads/images/orzel-bialy-godlo-polski625.logowik.com.webp">
+<link rel="alternate icon" href="https://logowik.com/content/uploads/images/orzel-bialy-godlo-polski625.logowik.com.webp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ministerstwo Finansów</title>
+
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root{
+  --blue: #0b2a5b;
+  --purple: #6d28d9;
+
+  --bg1: #f6f8ff;
+  --bg2: #fdf6ff;
+
+  --text: #1a2233;
+  --muted: rgba(26,34,51,0.65);
+
+  --panel: rgba(255,255,255,0.88);
+  --border: rgba(0,0,0,0.08);
+  --shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Inter,Segoe UI,sans-serif;
+  color:var(--text);
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+}
+
+/* ================= HEADER ================= */
+header{
+  padding:28px 18px;
+  text-align:center;
+  color:white;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+}
+
+header p{
+  margin:6px 0 0;
+  opacity:0.85;
+  font-size:13px;
+}
+
+/* ================= TICKER ================= */
+#ticker{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:10px 14px;
+  font-size:12px;
+  background: linear-gradient(90deg, #ffffff, #f3f4ff);
+  border-bottom:1px solid var(--border);
+  color:var(--muted);
+}
+
+/* ================= HAMBURGER ================= */
+#hamburger{
+  width:28px;
+  height:22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  cursor:pointer;
+}
+
+#hamburger span{
+  height:2px;
+  background: var(--text);
+  border-radius:4px;
+}
+
+/* ================= SIDEBAR (NAPRAWIONE) ================= */
+#sidebar{
+  position:fixed;
+  top:0;
+  left:-280px;
+  width:280px;
+  height:100%;
+  background:#ffffff;
+  border-right:1px solid var(--border);
+  transition:0.3s ease;
+  z-index:999;
+  display:flex;
+  flex-direction:column;
+  padding-top:60px;
+  box-shadow: 10px 0 30px rgba(0,0,0,0.08);
+}
+
+#sidebar.active{
+  left:0;
+}
+
+#close{
+  position:absolute;
+  top:10px;
+  right:14px;
+  font-size:26px;
+  cursor:pointer;
+}
+
+#sidebar div{
+  padding:14px 18px;
+  cursor:pointer;
+  color:var(--muted);
+  border-left:3px solid transparent;
+  transition:0.2s;
+}
+
+#sidebar div:hover{
+  background: linear-gradient(90deg, #eef2ff, #fdf2ff);
+  color:var(--text);
+  border-left:3px solid var(--blue);
+}
+
+/* ================= SEKCJE ================= */
+section{
+  display:none;
+  padding:26px;
+}
+
+section.active{
+  display:block;
+}
+
+/* ================= TYTUŁ ================= */
+h2{
+  border-left:4px solid var(--blue);
+  padding-left:10px;
+}
+
+/* ================= KARTY ================= */
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  margin:14px 0;
+  box-shadow:var(--shadow);
+}
+
+/* ================= GRID ================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:14px;
+}
+
+/* ================= WIDGET ================= */
+.widget{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  height:260px;
+}
+
+/* ================= INPUT ================= */
+input{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:10px;
+}
+
+/* ================= BUTTON ================= */
+button{
+  border-radius:10px;
+}
+
+/* ================= DWUKOLOROWY MOTYW SEKCJI ================= */
+
+/* HOME */
+#home{
+  background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(124,58,237,0.08));
+}
+
+/* INVEST */
+#invest{
+  background: linear-gradient(135deg, #eef2ff, #fdf2ff);
+}
+
+/* WALUTY */
+#waluty{
+  background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02));
+}
+
+/* PODATKI */
+#podatki{
+  background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(37,99,235,0.03));
+}
+
+/* MAKRO */
+#makro{
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+}
+
+/* KADRA */
+#kadra{
+  background: linear-gradient(135deg, #ffffff, #f3f4ff);
+}
+
+/* KALKULATORY */
+#kalkulatory{
+  background: linear-gradient(135deg, #f8fafc, #fdf6ff);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Ministerstwo Finansów</h1>
+<p>Oficjalny portal analiz gospodarczych i rynków finansowych</p>
+</header>
+
+<div id="ticker">
+  
+  <div id="hamburger" onclick="openMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  Rynki | Waluty | Surowce | Inflacja | Stopy procentowe | Kapitał globalny
+</div>
+
+<!-- MENU -->
+<div id="sidebar">
+  <div id="close" onclick="closeMenu()">×</div>
+  <div onclick="show('home')">Strona główna</div>
+  <div onclick="show('invest')">Inwestycje</div>
+  <div onclick="show('makro')">Ekonomia - wyjaśnienie</div>
+  <div onclick="show('waluty')">Waluty</div>
+  <div onclick="show('podatki')">Podatki</div>
+  <div onclick="show('kadra')">Kadra</div>
+  <div onclick="show('kalkulatory')">Kalkulatory</div>
+</div>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <h2>Rola Ministerstwa Finansów</h2>
+
+  <div class="card">
+    Ministerstwo Finansów odpowiada za stabilność gospodarki, politykę budżetową oraz kontrolę przepływów finansowych w państwie. 
+    Analizuje inflację, PKB, zadłużenie publiczne oraz strukturę wydatków państwa. 
+    Współpracuje z bankiem centralnym w zakresie polityki monetarnej i stabilności cen. 
+    Decyzje fiskalne wpływają na rynek pracy, inwestycje oraz poziom konsumpcji. 
+    Każdy budżet państwa musi być dostosowany do warunków makroekonomicznych. 
+    Zbyt duży deficyt może prowadzić do inflacji i osłabienia waluty. 
+    Zbyt restrykcyjna polityka może spowolnić rozwój gospodarczy. 
+    Celem ministerstwa jest utrzymanie równowagi między wzrostem a stabilnością.
+  </div>
+
+  <h2>Cele Ministerstwa na 3 kadencję</h2>
+
+  <div class="card">
+
+    <h3>1. Uproszczenie systemu podatkowego</h3>
+    <p>
+      Celem Ministerstwa jest stworzenie prostego, przejrzystego i stabilnego systemu podatkowego poprzez:
+    </p>
+    <ul>
+      <li>ograniczenie liczby stawek podatkowych,</li>
+      <li>likwidację zbędnych ulg i wyjątków,</li>
+      <li>ujednolicenie zasad rozliczeń podatkowych dla osób fizycznych i firm,</li>
+      <li>uproszczenie formularzy i obowiązków sprawozdawczych.</li>
+    </ul>
+
+    <h3>2. Cyfryzacja usług podatkowych i finansowych</h3>
+    <ul>
+      <li>rozwój systemu e-Podatki jako jednego centrum rozliczeń,</li>
+      <li>automatyczne wstępne rozliczenia podatkowe dla obywateli,</li>
+      <li>integracja systemów administracji skarbowej z bankami i księgowością,</li>
+      <li>ograniczenie kontaktu papierowego do minimum.</li>
+    </ul>
+
+    <h3>3. Stabilność i przewidywalność prawa podatkowego</h3>
+    <ul>
+      <li>uproszczenie procesu interpretacji podatkowych,</li>
+      <li>zwiększenie przejrzystości zmian legislacyjnych,</li>
+      <li>ograniczenie częstotliwości nowelizacji ustaw podatkowych.</li>
+    </ul>
+
+    <h3>4. Wzmocnienie uczciwości i zaufania w systemie podatkowym</h3>
+    <ul>
+      <li>wprowadzenie zasady rozstrzygania wątpliwości na korzyść podatnika,</li>
+      <li>uproszczenie procedur kontrolnych,</li>
+      <li>skrócenie czasu kontroli podatkowych,</li>
+      <li>ograniczenie uznaniowości urzędów skarbowych.</li>
+    </ul>
+
+    <h3>5. Wsparcie dla przedsiębiorców</h3>
+    <ul>
+      <li>uproszczenie rozliczeń CIT i VAT,</li>
+      <li>zmniejszenie kosztów administracyjnych prowadzenia działalności,</li>
+      <li>ujednolicenie zasad amortyzacji i księgowości,</li>
+      <li>rozwój jednolitych standardów raportowania.</li>
+    </ul>
+
+    <h3>6. Efektywność i modernizacja administracji skarbowej</h3>
+    <ul>
+      <li>automatyzacja procesów analitycznych,</li>
+      <li>rozwój narzędzi sztucznej inteligencji w analizie ryzyka,</li>
+      <li>zwiększenie efektywności poboru podatków przy jednoczesnym zmniejszeniu liczby kontroli,</li>
+      <li>szkolenia i cyfrowa transformacja pracowników administracji.</li>
+    </ul>
+
+    <h3>Podsumowanie</h3>
+    <ul>
+      <li>zmniejsza obciążenia obywateli i firm,</li>
+      <li>zwiększa przejrzystość prawa,</li>
+      <li>poprawia relacje między państwem a podatnikiem.</li>
+    </ul>
+
+  </div>
+</section>
+
+<!-- INVEST -->
+<section id="invest">
+<h2>Dlaczego warto inwestować?</h2>
+
+<div class="card">
+Inwestowanie polega na lokowaniu kapitału w aktywa finansowe i realne w celu ochrony wartości pieniądza i generowania zysków. 
+Aktywa takie jak akcje, obligacje, surowce i kryptowaluty różnią się poziomem ryzyka oraz potencjalnym zwrotem. 
+Długoterminowe inwestowanie pozwala pokonać inflację i budować majątek. 
+Kluczową rolę odgrywa procent składany, który powoduje wykładniczy wzrost kapitału. 
+Dywersyfikacja zmniejsza ryzyko strat poprzez rozłożenie środków na różne rynki.
+</div>
+
+<div class="card">
+<h3>Rynki finansowe</h3>
+Rynki finansowe to systemy, w których odbywa się obrót kapitałem pomiędzy inwestorami, instytucjami finansowymi oraz przedsiębiorstwami. Umożliwiają one pozyskiwanie środków na rozwój firm, finansowanie państw oraz lokowanie oszczędności. Ceny instrumentów finansowych na rynkach odzwierciedlają oczekiwania dotyczące przyszłej sytuacji gospodarczej, inflacji, stóp procentowych oraz kondycji globalnej ekonomii.
+
+W krótkim okresie rynki mogą być bardzo zmienne i podatne na emocje, informacje medialne oraz spekulacje. W dłuższej perspektywie większe znaczenie mają fundamenty gospodarcze, takie jak wzrost PKB, wyniki spółek czy polityka monetarna banków centralnych. Rynki finansowe pełnią także funkcję informacyjną, ponieważ agregują dane i oczekiwania uczestników rynku w jednej cenie.
+</div>
+
+<div class="card">
+<h3>Instrumenty finansowe</h3>
+Instrumenty finansowe to różne formy aktywów, które można kupować, sprzedawać lub wykorzystywać do zabezpieczania ryzyka. Do najważniejszych należą akcje, obligacje, kontrakty terminowe oraz instrumenty pochodne. Każdy z nich ma inny poziom ryzyka, płynności i potencjalnego zysku.
+
+Akcje reprezentują udział w spółce i dają prawo do części jej zysków. Obligacje są formą długu, w której inwestor pożycza pieniądze emitentowi w zamian za odsetki. Instrumenty pochodne, takie jak opcje czy futures, pozwalają spekulować na zmianach cen lub zabezpieczać się przed ryzykiem. Właściwy dobór instrumentów zależy od strategii inwestora, horyzontu czasowego oraz tolerancji na ryzyko.
+</div>
+
+<div class="card">
+<h3>Ryzyko i psychologia</h3>
+Ryzyko jest nieodłącznym elementem inwestowania i oznacza możliwość utraty części lub całości zainwestowanego kapitału. Na rynkach finansowych ryzyko wynika z wielu czynników, takich jak zmienność cen, niepewność gospodarcza, decyzje polityczne czy globalne kryzysy. Im wyższy potencjalny zysk, tym zazwyczaj wyższe ryzyko.
+
+Psychologia inwestora odgrywa kluczową rolę w podejmowaniu decyzji. Emocje takie jak strach i chciwość często prowadzą do błędów, takich jak paniczna sprzedaż lub nadmierne ryzyko. Skuteczni inwestorzy opierają się na strategii, dyscyplinie i analizie, a nie na impulsywnych reakcjach. Kontrola emocji oraz konsekwencja w działaniu są często ważniejsze niż sama wiedza techniczna.
+</div>
+
+<div class="grid" id="grid"></div>
+</section>
+
+<!-- WALUTY -->
+<section id="waluty">
+<h2>Waluty i system pieniężny</h2>
+
+<div class="card">
+<h3>Jak działa pieniądz?</h3>
+Pieniądz jest podstawowym narzędziem wymiany w gospodarce i umożliwia handel towarami oraz usługami bez konieczności wymiany bezpośredniej (barteru). Jego główne funkcje to: środek wymiany, jednostka rozrachunkowa oraz przechowywanie wartości.
+Współczesny pieniądz w większości krajów ma charakter fiducjarny, co oznacza, że nie jest oparty na kruszcu ani innym fizycznym zabezpieczeniu. Jego wartość wynika z zaufania do państwa oraz stabilności systemu finansowego. Pieniądz jest emitowany przez bank centralny, który kontroluje jego podaż oraz wpływa na gospodarkę poprzez politykę monetarną.
+Dużą część pieniądza w obiegu tworzą również banki komercyjne poprzez udzielanie kredytów. Kiedy bank udziela pożyczki, w praktyce tworzy nowy pieniądz w systemie bankowym, co zwiększa całkowitą podaż pieniądza w gospodarce.
+Ilość pieniądza w obiegu ma bezpośredni wpływ na inflację, poziom cen oraz siłę nabywczą. 
+Zbyt szybki wzrost podaży pieniądza może prowadzić do inflacji, 
+natomiast zbyt niski wzrost może powodować spowolnienie gospodarcze lub deflację. 
+Dlatego kontrola podaży pieniądza jest jednym z kluczowych zadań banków centralnych.
+</div>
+
+<div class="grid">
+<div class="widget" id="fx1"></div>
+<div class="widget" id="fx2"></div>
+<div class="widget" id="fx3"></div>
+</div>
+</section>
+
+<!-- KADRA -->
+<section id="kadra">
+  <h2>Kadra kierownicza</h2>
+
+  <div class="card" style="display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;">
+
+    <!-- LEWA STRONA -->
+    <div style="min-width:220px; text-align:center;">
+      <img 
+        src="https://cdn.discordapp.com/attachments/1491490609926504578/1493931155605426226/image.png?ex=69e0c34f&is=69df71cf&hm=53fbc2a60025a5399141ff18caca962a690600a871a384dff8be272b75e57a44"
+        style="
+          width:200px;
+          height:auto;
+          border-radius:10px;
+          border:2px solid #d9e1ea;
+          box-shadow:0 6px 16px rgba(0,0,0,0.08);
+        "
+      >
+
+      <h3 style="margin:12px 0 4px 0;">Zbigniew Bączur</h3>
+      <p style="margin:0; color:#555;"><strong>Minister Finansów</strong></p>
+    </div>
+
+    <!-- PRAWA STRONA -->
+    <div style="flex:1; min-width:280px;">
+
+      <h3 style="margin-top:0;">Biografia Ministra</h3>
+
+      <p style="color:#333; line-height:1.6;">
+        Zbigniew Bączur (ur. 4 stycznia 1983 r.) - polski ekonomista, inwestor oraz polityk, obecnie pełniący funkcję ministra w rządzie III kadencji Sejmu RP. Specjalizuje się w finansach publicznych, polityce fiskalnej oraz reformach systemu podatkowego.
+      </p>
+
+      <details style="
+        margin-top:12px;
+        padding:12px;
+        background:#f7f9fc;
+        border:1px solid #e3e8f0;
+        border-radius:8px;
+      ">
+        <summary style="cursor:pointer; font-weight:600; color:#0b1f3a;">
+          Czytaj pełną biografię
+        </summary>
+
+        <div style="margin-top:14px; line-height:1.6; color:#222;">
+
+          <h4>Wykształcenie</h4>
+          <p>
+            Ukończył Technikum Ekonomiczne o profilu rachunkowość i finanse. Następnie studiował finanse i rachunkowość w Warszawie, gdzie rozwijał zainteresowania w zakresie makroekonomii, budżetu państwa oraz analizy ryzyka fiskalnego.
+          </p>
+
+          <h4>Kariera zawodowa</h4>
+          <p>
+            Przed wejściem do polityki pracował jako inwestor prywatny, koncentrując się na rynkach kapitałowych oraz inwestycjach w sektorze nieruchomości i technologii. Zyskał opinię osoby pragmatycznej, nastawionej na efektywność i kontrolę kosztów.
+          </p>
+
+          <h4>Działalność publiczna</h4>
+
+          <p><strong>I kadencja Sejmu – wiceminister ds. zwalczania deficytu</strong></p>
+          <ul>
+            <li>program redukcji deficytu państwa</li>
+            <li>analiza i ograniczanie wydatków publicznych</li>
+            <li>przygotowanie reform fiskalnych</li>
+          </ul>
+
+          <p>
+            W trakcie kadencji doszło do kryzysu budżetowego i upadku rządu.
+          </p>
+
+          <p><strong>Okres poza rządem</strong></p>
+          <p>
+            Powrót do działalności inwestycyjnej oraz prac analitycznych nad reformą finansów publicznych.
+          </p>
+
+          <p><strong>III kadencja Sejmu – minister finansów</strong></p>
+          <ul>
+            <li>reforma systemu podatkowego</li>
+            <li>stabilizacja finansów publicznych</li>
+            <li>cyfryzacja administracji skarbowej</li>
+            <li>redukcja deficytu przy wzroście gospodarczym</li>
+          </ul>
+
+          <h4>Styl działania</h4>
+          <ul>
+            <li>redukcja biurokracji</li>
+            <li>prostota systemu podatkowego</li>
+            <li>decyzje oparte na danych</li>
+            <li>stabilność fiskalna</li>
+          </ul>
+
+        </div>
+      </details>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- PODATKI -->
+<section id="podatki">
+<h2>System podatkowy</h2>
+
+<div class="card">
+System podatkowy to całość zasad, które określają w jaki sposób państwo pobiera podatki od obywateli, firm oraz instytucji. Podatki są obowiązkowe i stanowią główne źródło finansowania państwa. Każdy podatek ma określoną podstawę opodatkowania, czyli to od czego jest naliczany. Może to być dochód, sprzedaż, majątek lub konkretne produkty. System podatkowy wpływa bezpośrednio na gospodarkę, poziom życia obywateli oraz rozwój przedsiębiorstw.
+</div>
+
+<div class="card">
+<h2>Podatki bezpośrednie</h2>
+
+<h3>Podatek PIT</h3>
+Podatek PIT (Personal Income Tax) to podatek od dochodów osób fizycznych. Obejmuje on wynagrodzenia z pracy, umów cywilnoprawnych, działalności gospodarczej oraz innych źródeł dochodu. Podstawą opodatkowania jest dochód, czyli przychód pomniejszony o koszty jego uzyskania.
+
+Rozliczenie PIT odbywa się zazwyczaj raz w roku poprzez złożenie deklaracji podatkowej do urzędu skarbowego. W trakcie roku pracodawca lub zleceniodawca pobiera zaliczki na podatek, dzięki czemu podatnik na koniec roku rozlicza jedynie różnicę – dopłatę lub zwrot. Najczęściej stosowane formularze to PIT-37 (dla osób zatrudnionych na umowę o pracę i zlecenie) oraz PIT-36 (dla osób prowadzących działalność gospodarczą). Deklarację składa się elektronicznie lub papierowo, zwykle do końca kwietnia.
+
+<h3>Podatek CIT</h3>
+Podatek CIT (Corporate Income Tax) to podatek od dochodów osób prawnych, czyli głównie spółek i przedsiębiorstw. Dotyczy on zysków firmy, czyli przychodów pomniejszonych o koszty działalności.
+
+CIT jest rozliczany rocznie lub kwartalnie, w zależności od wielkości przedsiębiorstwa i formy rozliczeń. Wysokość podatku zależy od obowiązujących stawek oraz przepisów podatkowych w danym kraju. Podatek ten ma istotny wpływ na decyzje inwestycyjne firm oraz ich rentowność.
+
+<h3>Podatki majątkowe</h3>
+Podatki majątkowe obejmują opodatkowanie posiadanych aktywów, takich jak nieruchomości, spadki, darowizny oraz inne formy majątku. Ich wysokość zależy od wartości majątku, rodzaju aktywów oraz przepisów obowiązujących w danym państwie.
+</div>
+
+
+<div class="card">
+<h2>Podatki pośrednie</h2>
+
+<h3>Podatek VAT</h3>
+VAT (Value Added Tax) to podatek doliczany do większości towarów i usług. Jest to podatek pośredni, co oznacza, że formalnie płaci go przedsiębiorca, ale realny koszt ponosi konsument w cenie produktu.
+
+Przedsiębiorcy działają jako pośrednicy – doliczają VAT do sprzedaży, ale mogą też odliczać VAT zapłacony przy zakupach firmowych. Do urzędu skarbowego odprowadzana jest różnica między VAT należnym a naliczonym. VAT jest jednym z najważniejszych źródeł dochodów państwa i działa na każdym etapie obrotu gospodarczego.
+
+<h3>Akcyza</h3>
+Akcyza to podatek nakładany na wybrane grupy produktów, takich jak paliwa, alkohol, papierosy czy energia elektryczna. Jej celem jest zarówno zwiększenie dochodów budżetu państwa, jak i regulacja konsumpcji dóbr uznawanych za szkodliwe lub strategiczne.
+
+Akcyza wpływa bezpośrednio na cenę końcową produktów, przez co ogranicza ich dostępność cenową i zmienia zachowania konsumentów.
+
+<h3>Cła</h3>
+Cła to opłaty nakładane na towary przekraczające granice państwowe, głównie w imporcie. Ich głównym celem jest ochrona krajowego rynku przed zagraniczną konkurencją, regulacja handlu międzynarodowego oraz zwiększanie dochodów państwa.
+
+Cła powodują wzrost cen produktów importowanych, co może zwiększać konkurencyjność krajowych producentów, ale jednocześnie podnosi koszty dla konsumentów.
+</div>
+
+
+<div class="card">
+<h2>Składki i opłaty</h2>
+
+<h3>Składki ZUS (ubezpieczenia społeczne)</h3>
+Składki ZUS to obowiązkowe opłaty, które finansują system ubezpieczeń społecznych. Obejmują ubezpieczenia emerytalne, rentowe, chorobowe, zdrowotne oraz wypadkowe.
+
+System ten zapewnia świadczenia w sytuacjach takich jak emerytura, choroba, wypadek czy niezdolność do pracy. Składki te są kluczowym elementem systemu zabezpieczenia społecznego i mają wpływ na stabilność finansową państwa.
+
+<h3>Podatki i opłaty środowiskowe</h3>
+Podatki ekologiczne i opłaty środowiskowe obejmują m.in. emisję CO₂, zużycie energii oraz zanieczyszczenie środowiska przez przemysł i transport.
+
+Ich celem jest ograniczanie negatywnego wpływu gospodarki na klimat oraz promowanie bardziej ekologicznych technologii i zachowań. Jednocześnie stanowią one dodatkowe źródło dochodów publicznych.
+</div>
+
+</section>
+
+<section id="kalkulatory">
+<h2>Kalkulatory finansowe</h2>
+
+<div class="grid">
+
+  <div class="card">
+    <h3>VAT 23%</h3>
+
+    <input id="vatNetto" placeholder="Netto" style="width:100%;box-sizing:border-box;padding:10px;margin:6px 0;">
+    <input id="vatBrutto" placeholder="Brutto" style="width:100%;box-sizing:border-box;padding:10px;margin:6px 0;">
+
+    <button onclick="calcVATfromNetto()" style="padding:10px;width:100%;background:#0b1f3a;color:white;border:none;cursor:pointer;">
+      Netto → Brutto
+    </button>
+
+    <button onclick="calcVATfromBrutto()" style="padding:10px;width:100%;margin-top:6px;background:#102a4d;color:white;border:none;cursor:pointer;">
+      Brutto → Netto
+    </button>
+
+    <p id="vatOut" style="margin-top:10px;font-weight:bold;"></p>
+  </div>
+
+  <div class="card">
+    <h3>PIT (12%)</h3>
+
+    <input id="pitIncome" placeholder="Dochód roczny" style="width:100%;box-sizing:border-box;padding:10px;margin:6px 0;">
+
+    <button onclick="calcPIT()" style="padding:10px;width:100%;background:#0b1f3a;color:white;border:none;cursor:pointer;">
+      Oblicz PIT
+    </button>
+
+    <p id="pitOut" style="margin-top:10px;font-weight:bold;"></p>
+  </div>
+
+  <div class="card">
+    <h3>CIT (19%)</h3>
+
+    <input id="citProfit" placeholder="Zysk firmy" style="width:100%;box-sizing:border-box;padding:10px;margin:6px 0;">
+
+    <button onclick="calcCIT()" style="padding:10px;width:100%;background:#0b1f3a;color:white;border:none;cursor:pointer;">
+      Oblicz CIT
+    </button>
+
+    <p id="citOut" style="margin-top:10px;font-weight:bold;"></p>
+  </div>
+
+</div>
+</section>
+
+<section id="makro">
+<h2>Ekonomia</h2>
+<h3>Ekonomia dzieli się na dwa główne obszary: makroekonomię i mikroekonomię, 
+które razem opisują sposób 
+funkcjonowania całej gospodarki oraz zachowania jej poszczególnych uczestników.</h3>
+
+<div class="grid">
+
+  <div class="card">
+    <h2>Makroekonomia</h2>
+   <h3>Makroekonomia zajmuje się analizą gospodarki w skali całego państwa lub świata. 
+   Bada takie zjawiska jak inflacja, czyli tempo wzrostu cen w gospodarce, produkt krajowy 
+   brutto (PKB) pokazujący łączną wartość wytworzonych dóbr i usług, poziom bezrobocia, 
+   a także stopy procentowe ustalane przez bank centralny, które wpływają na koszt kredytów i aktywność 
+   gospodarczą. Makroekonomia opisuje również cykle koniunkturalne, czyli okresy wzrostu i spowolnienia gospodarki, 
+   oraz analizuje wpływ polityki fiskalnej i monetarnej na rozwój kraju.</h3>
+  </div>
+
+  <div class="card">
+    <h2>Mikroekonomia</h2>
+	<h3>Mikroekonomia koncentruje się na mniejszych elementach gospodarki, 
+takich jak gospodarstwa domowe, przedsiębiorstwa oraz konkretne rynki. 
+Analizuje, w jaki sposób kształtują się ceny produktów i usług, jak działa mechanizm 
+popytu i podaży oraz dlaczego konsumenci podejmują określone decyzje zakupowe. 
+Mikroekonomia bada także strategie firm, ich sposób ustalania cen, poziom produkcji 
+oraz reakcje na konkurencję rynkową. Dzięki temu pozwala zrozumieć, dlaczego 
+poszczególne dobra kosztują tyle, ile kosztują, 
+oraz jak zachowują się uczestnicy rynku w różnych warunkach ekonomicznych.</h3>
+  
+  </div>
+
+</div>
+</section>
+
+<script>
+/* =========================
+   ANIMACJE GLOBALNE
+========================= */
+
+function animateSectionIn(el) {
+  if (!el) return;
+
+  el.style.opacity = "0";
+  el.style.transform = "translateY(10px)";
+  el.style.transition = "all 0.25s ease";
+
+  requestAnimationFrame(() => {
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  });
+}
+
+/* =========================
+   NAWIGACJA STRON (ULEPSZONA)
+========================= */
+
+function show(id) {
+  const sections = document.querySelectorAll("section");
+
+  sections.forEach(s => {
+    s.classList.remove("active");
+  });
+
+  const target = document.getElementById(id);
+
+  if (target) {
+    target.classList.add("active");
+    animateSectionIn(target);
+  }
+
+  closeMenu();
+}
+
+function openMenu() {
+  const menu = document.getElementById("sidebar");
+  if (menu) menu.classList.add("active");
+}
+
+function closeMenu() {
+  const menu = document.getElementById("sidebar");
+  if (menu) menu.classList.remove("active");
+}
+
+/* =========================
+   WYKRESY TRADINGVIEW
+========================= */
+
+const assets = [
+  "BINANCE:BTCUSDT",
+  "BINANCE:ETHUSDT",
+  "TVC:GOLD",
+  "TVC:SILVER",
+  "NASDAQ:MSFT"
+];
+
+function createChart(containerId, symbol) {
+  new TradingView.widget({
+    container_id: containerId,
+    width: "100%",
+    height: 260,
+    symbol: symbol,
+    interval: "60",
+    timezone: "Europe/Warsaw",
+    theme: "light",
+    style: "1",
+    locale: "pl"
+  });
+}
+
+function createCharts() {
+  const grid = document.getElementById("grid");
+  if (!grid) return;
+
+  assets.forEach((symbol, i) => {
+    const div = document.createElement("div");
+    div.className = "widget";
+    div.id = "w" + i;
+    grid.appendChild(div);
+
+    createChart(div.id, symbol);
+  });
+
+  createChart("fx1", "FX_IDC:EURPLN");
+  createChart("fx2", "FX_IDC:USDPLN");
+  createChart("fx3", "FX_IDC:EURUSD");
+}
+
+/* opóźnione ładowanie wykresów (lepsza wydajność) */
+window.addEventListener("load", () => {
+  setTimeout(createCharts, 300);
+});
+
+/* =========================
+   SCROLL ANIMACJA KART
+========================= */
+
+function initCardAnimations() {
+  const cards = document.querySelectorAll(".card");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0)";
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(card => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(12px)";
+    card.style.transition = "all 0.4s ease";
+    observer.observe(card);
+  });
+}
+
+window.addEventListener("load", () => {
+  setTimeout(initCardAnimations, 500);
+});
+
+/* =========================
+   KALKULATORY
+========================= */
+
+function getNumber(id) {
+  const value = parseFloat(document.getElementById(id)?.value);
+  return isNaN(value) ? null : value;
+}
+
+function setOutput(id, text) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.innerText = text;
+
+  /* mały efekt “flash” */
+  el.style.transform = "scale(1.05)";
+  el.style.transition = "0.15s";
+
+  setTimeout(() => {
+    el.style.transform = "scale(1)";
+  }, 120);
+}
+
+/* VAT */
+function calcVATfromNetto() {
+  const n = getNumber("vatNetto");
+  if (n === null) return;
+
+  const vat = n * 0.23;
+  const brutto = n + vat;
+
+  setOutput("vatOut", `VAT: ${vat.toFixed(2)} | Brutto: ${brutto.toFixed(2)}`);
+}
+
+function calcVATfromBrutto() {
+  const b = getNumber("vatBrutto");
+  if (b === null) return;
+
+  const netto = b / 1.23;
+  const vat = b - netto;
+
+  setOutput("vatOut", `Netto: ${netto.toFixed(2)} | VAT: ${vat.toFixed(2)}`);
+}
+
+/* PIT */
+function calcPIT() {
+  const income = getNumber("pitIncome");
+  if (income === null) return;
+
+  const tax = income * 0.12;
+
+  setOutput("pitOut", `Podatek PIT: ${tax.toFixed(2)}`);
+}
+
+/* CIT */
+function calcCIT() {
+  const profit = getNumber("citProfit");
+  if (profit === null) return;
+
+  const tax = profit * 0.19;
+
+  setOutput("citOut", `Podatek CIT: ${tax.toFixed(2)}`);
+}
+</script>
+
+</body>
+</html>
